@@ -315,7 +315,8 @@ router.post("/remove-one-person", function (req, res, next) {
 
 const removeMany = require("./myApp.js").removeManyPeople;
 router.post("/remove-many-people", function (req, res, next) {
-  Person.remove({}, function (err) {
+  console.log('person: ', req.body);
+  Person.deleteOne({ name: req.body.name }, function (err) {
     if (err) {
       return next(err);
     }
@@ -324,6 +325,7 @@ router.post("/remove-many-people", function (req, res, next) {
     }, TIMEOUT);
     Person.create(req.body, function (err, pers) {
       if (err) {
+        console.error(err);
         return next(err);
       }
       try {
